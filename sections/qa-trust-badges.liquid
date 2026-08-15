@@ -1,0 +1,88 @@
+{{ 'section-qa-trust-badges.css' | asset_url | stylesheet_tag }}
+
+<div class="qa-trust-badges color-{{ section.settings.color_scheme }} page-width">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="qa-trust-badges__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  <ul class="qa-trust-badges__row" role="list">
+    {%- for block in section.blocks -%}
+      <li
+        class="qa-trust-badges__item"
+        {% if block.settings.tooltip != blank %}
+          tabindex="0"
+          aria-describedby="qa-badge-tip-{{ forloop.index }}"
+        {% endif %}
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.icon != blank -%}
+          {{ block.settings.icon | image_url: width: 48 | image_tag: loading: 'lazy', width: 28, height: 28 }}
+        {%- endif -%}
+        <span class="qa-trust-badges__label">{{ block.settings.label }}</span>
+        {%- if block.settings.tooltip != blank -%}
+          <span class="qa-trust-badges__tooltip" id="qa-badge-tip-{{ forloop.index }}" role="tooltip">
+            {{ block.settings.tooltip }}
+          </span>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+{% schema %}
+{
+  "name": "QA trust badges",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Quality you can verify"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Dermatologist tested"
+        },
+        {
+          "type": "textarea",
+          "id": "tooltip",
+          "label": "Tooltip (optional)",
+          "default": "Independently tested on 50 panelists across sensitive skin types."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "QA trust badges",
+      "blocks": [
+        { "type": "badge" },
+        { "type": "badge" },
+        { "type": "badge" },
+        { "type": "badge" }
+      ]
+    }
+  ]
+}
+{% endschema %}
