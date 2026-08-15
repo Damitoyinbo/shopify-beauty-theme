@@ -1,0 +1,41 @@
+{%- comment -%}
+  Renders the live restock-urgency indicator for the current/selected variant.
+  Usage: {% render 'restock-indicator', product: product %}
+{%- endcomment -%}
+
+<restock-indicator
+  class="restock-indicator"
+  data-product-id="{{ product.id }}"
+  data-section-id="{{ section.id }}"
+  data-low-stock-threshold="{{ section.settings.low_stock_threshold | default: 5 }}"
+>
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+  <span class="restock-indicator__text" data-restock-text>
+    {%- if current_variant.available == false -%}
+      Out of stock
+    {%- elsif current_variant.inventory_management != blank and current_variant.inventory_quantity <= 5 and current_variant.inventory_quantity > 0 -%}
+      Only {{ current_variant.inventory_quantity }} left
+    {%- else -%}
+      In stock
+    {%- endif -%}
+  </span>
+
+  {%- if current_variant.available == false -%}
+    <button type="button" class="restock-indicator__notify" data-notify-button>
+      Notify me when back
+    </button>
+  {%- endif -%}
+
+  {%- comment -%} Inventory snapshot per variant, read by the custom element on variant:change {%- endcomment -%}
+  <script type="application/json" data-restock-inventory>
+    {
+      {%- for variant in product.variants -%}
+        "{{ variant.id }}": {
+          "available": {{ variant.available | json }},
+          "inventory_quantity": {{ variant.inventory_quantity | json }},
+          "inventory_management": {{ variant.inventory_management | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    }
+  </script>
+</restock-indicator>
