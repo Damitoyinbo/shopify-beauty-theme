@@ -1,0 +1,114 @@
+{{ 'section-supplier-sourcing.css' | asset_url | stylesheet_tag }}
+
+<div class="supplier-transparency color-{{ section.settings.color_scheme }} page-width">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="supplier-transparency__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  {%- if section.settings.subheading != blank -%}
+    <p class="supplier-transparency__subheading">{{ section.settings.subheading }}</p>
+  {%- endif -%}
+
+  <ul class="supplier-transparency__grid" role="list">
+    {%- for block in section.blocks -%}
+      <li class="supplier-transparency__card" {{ block.shopify_attributes }}>
+        {%- if block.settings.icon != blank -%}
+          <div class="supplier-transparency__icon">
+            {{ block.settings.icon | image_url: width: 64 | image_tag: loading: 'lazy', width: 32, height: 32 }}
+          </div>
+        {%- endif -%}
+        <h3 class="supplier-transparency__ingredient">{{ block.settings.ingredient_or_claim }}</h3>
+        {%- if block.settings.origin != blank -%}
+          <p class="supplier-transparency__origin">
+            <span class="supplier-transparency__label">Sourced from</span> {{ block.settings.origin }}
+          </p>
+        {%- endif -%}
+        {%- if block.settings.certification != blank -%}
+          <span class="supplier-transparency__badge">{{ block.settings.certification }}</span>
+        {%- endif -%}
+        {%- if block.settings.note != blank -%}
+          <p class="supplier-transparency__note">{{ block.settings.note }}</p>
+        {%- endif -%}
+      </li>
+    {%- else -%}
+      <li class="supplier-transparency__empty">
+        Add a block to list a supplier, ingredient origin, or sourcing claim.
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+{% schema %}
+{
+  "name": "Supplier sourcing transparency",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Where it comes from"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Every ingredient, traced back to its source."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "supplier_claim",
+      "name": "Sourcing claim",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_or_claim",
+          "label": "Ingredient or claim",
+          "default": "Shea Butter"
+        },
+        {
+          "type": "text",
+          "id": "origin",
+          "label": "Origin",
+          "default": "Northern Ghana, women-led cooperatives"
+        },
+        {
+          "type": "text",
+          "id": "certification",
+          "label": "Certification badge text",
+          "default": "Fair Trade Verified"
+        },
+        {
+          "type": "textarea",
+          "id": "note",
+          "label": "Sourcing note",
+          "default": "Hand-harvested and cold-pressed within 48 hours of collection."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Supplier sourcing transparency",
+      "blocks": [
+        { "type": "supplier_claim" },
+        { "type": "supplier_claim" },
+        { "type": "supplier_claim" }
+      ]
+    }
+  ]
+}
+{% endschema %}
