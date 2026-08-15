@@ -1,0 +1,26 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Beauty & Personal Care (Dawn extension)",
+    "theme_author": "Damilola Oguntoyinbo",
+    "theme_version": "1.0.0",
+    "theme_documentation_url": "https://github.com/Damitoyinbo/shopify-beauty-theme"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Color schemes"
+      }
+    ]
+  },
+  {
+    "name": "scheme-1",
+    "settings": []
+  },
+  {
+    "name": "scheme-2",
+    "settings": []
+  }
+]
