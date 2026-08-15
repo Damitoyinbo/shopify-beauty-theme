@@ -1,0 +1,52 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "low_stock_threshold": 5
+      }
+    },
+    "supplier-sourcing": {
+      "type": "supplier-sourcing-transparency",
+      "blocks": {
+        "shea": {
+          "type": "supplier_claim",
+          "settings": {
+            "ingredient_or_claim": "Shea Butter",
+            "origin": "Northern Ghana, women-led cooperatives",
+            "certification": "Fair Trade Verified",
+            "note": "Hand-harvested and cold-pressed within 48 hours of collection."
+          }
+        },
+        "baobab": {
+          "type": "supplier_claim",
+          "settings": {
+            "ingredient_or_claim": "Baobab Oil",
+            "origin": "Malawi smallholder farms",
+            "certification": "Rainforest Alliance",
+            "note": "Cold-pressed, single-origin, traceable to farm cooperative."
+          }
+        }
+      },
+      "block_order": ["shea", "baobab"]
+    },
+    "qa-badges": {
+      "type": "qa-trust-badges",
+      "blocks": {
+        "derm": {
+          "type": "badge",
+          "settings": {
+            "label": "Dermatologist tested",
+            "tooltip": "Independently tested on 50 panelists across sensitive skin types."
+          }
+        },
+        "cruelty": {
+          "type": "badge",
+          "settings": { "label": "Cruelty-free" }
+        }
+      },
+      "block_order": ["derm", "cruelty"]
+    }
+  },
+  "order": ["main", "supplier-sourcing", "qa-badges"]
+}
