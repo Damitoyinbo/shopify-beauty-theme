@@ -1,0 +1,47 @@
+{{ 'section-main-product.css' | asset_url | stylesheet_tag }}
+
+<div class="product page-width" id="MainProduct-{{ section.id }}">
+  <div class="product__media">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'eager', width: 800 }}
+    {%- endif -%}
+  </div>
+
+  <div class="product__info">
+    <h1 class="product__title">{{ product.title }}</h1>
+    <p class="product__price">{{ product.selected_or_first_available_variant.price | money }}</p>
+
+    <variant-picker data-section-id="{{ section.id }}">
+      <select aria-label="Variant">
+        {%- for variant in product.variants -%}
+          <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected{% endif %}>
+            {{ variant.title }}
+          </option>
+        {%- endfor -%}
+      </select>
+      <script type="application/json" data-variants-json>
+        {{ product.variants | json }}
+      </script>
+    </variant-picker>
+
+    {%- render 'restock-indicator', product: product -%}
+
+    {{ product.description }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Main product",
+  "tag": "section",
+  "class": "section section--main-product",
+  "settings": [
+    {
+      "type": "number",
+      "id": "low_stock_threshold",
+      "label": "Low stock threshold",
+      "default": 5
+    }
+  ]
+}
+{% endschema %}
