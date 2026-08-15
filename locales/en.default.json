@@ -1,0 +1,15 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "Search"
+    }
+  },
+  "products": {
+    "product": {
+      "in_stock": "In stock",
+      "out_of_stock": "Out of stock",
+      "low_stock": "Only {{ count }} left",
+      "notify_me": "Notify me when back"
+    }
+  }
+}
